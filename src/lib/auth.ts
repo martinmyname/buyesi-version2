@@ -3,10 +3,12 @@ import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 
-const JWT_SECRET = process.env.JWT_SECRET;
-
-if (!JWT_SECRET) {
-  throw new Error("JWT_SECRET environment variable is required");
+function getJwtSecret(): string {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error("JWT_SECRET environment variable is required");
+  }
+  return secret;
 }
 
 export function hashPassword(password: string) {
@@ -18,12 +20,12 @@ export function comparePassword(password: string, hash: string) {
 }
 
 export function signToken(payload: { userId: string; username: string }) {
-  return jwt.sign(payload, JWT_SECRET!, { expiresIn: "7d" });
+  return jwt.sign(payload, getJwtSecret(), { expiresIn: "7d" });
 }
 
 export function verifyToken(token: string) {
   try {
-    return jwt.verify(token, JWT_SECRET!) as {
+    return jwt.verify(token, getJwtSecret()) as {
       userId: string;
       username: string;
     };
