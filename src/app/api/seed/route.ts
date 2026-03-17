@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { hashPassword } from "@/lib/auth";
 
 export async function GET() {
+  try {
   // Ensure admin user exists
   let admin = await prisma.user.findUnique({
     where: { username: "admin" },
@@ -163,4 +164,10 @@ export async function GET() {
   });
 
   return NextResponse.json({ message: "Seeded admin and blog posts" });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Seed failed", details: String(error) },
+      { status: 500 }
+    );
+  }
 }
