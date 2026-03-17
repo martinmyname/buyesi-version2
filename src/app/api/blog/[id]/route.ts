@@ -8,16 +8,23 @@ export async function GET(
 ) {
   const { id } = await params;
 
-  const blog = await prisma.blog.findUnique({
-    where: { id },
-    include: { author: { select: { name: true } } },
-  });
+  try {
+    const blog = await prisma.blog.findUnique({
+      where: { id },
+      include: { author: { select: { name: true } } },
+    });
 
-  if (!blog) {
-    return NextResponse.json({ error: "Blog not found" }, { status: 404 });
+    if (!blog) {
+      return NextResponse.json({ error: "Blog not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(blog);
+  } catch {
+    return NextResponse.json(
+      { error: "Failed to fetch blog" },
+      { status: 500 }
+    );
   }
-
-  return NextResponse.json(blog);
 }
 
 export async function PUT(
@@ -33,20 +40,23 @@ export async function PUT(
   const { id } = await params;
 
   try {
-    const { title, excerpt, content, imageId, categories, tags, published } =
-      await request.json();
+    const body = await request.json();
+
+    // Build update data — only include fields that were sent
+    const data: Record<string, unknown> = {};
+
+    if (body.title !== undefined) data.title = body.title;
+    if (body.excerpt !== undefined) data.excerpt = body.excerpt;
+    if (body.content !== undefined) data.content = body.content;
+    if (body.imageId !== undefined) data.imageId = body.imageId || null;
+    if (body.categories !== undefined)
+      data.categories = body.categories || null;
+    if (body.tags !== undefined) data.tags = body.tags || null;
+    if (body.published !== undefined) data.published = body.published;
 
     const blog = await prisma.blog.update({
       where: { id },
-      data: {
-        title,
-        excerpt,
-        content,
-        imageId: imageId || null,
-        categories: categories || null,
-        tags: tags || null,
-        published,
-      },
+      data,
     });
 
     return NextResponse.json(blog);

@@ -1,8 +1,10 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import Hero from "@/components/Hero";
 import { prisma } from "@/lib/prisma";
+import { sanitizeBlogContent } from "@/lib/sanitize";
 import { ArrowLeft, Calendar, User, Tag, FolderOpen } from "lucide-react";
 
 interface Props {
@@ -37,6 +39,8 @@ export default async function BlogPostPage({ params }: Props) {
 
   if (!blog) notFound();
 
+  const safeContent = sanitizeBlogContent(blog.content);
+
   return (
     <>
       <Hero
@@ -48,25 +52,30 @@ export default async function BlogPostPage({ params }: Props) {
         ]}
       />
 
-      <section className="py-16">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-8 sm:py-16">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/blog"
-            className="inline-flex items-center gap-2 text-primary hover:underline mb-8"
+            className="inline-flex items-center gap-2 text-primary hover:underline mb-6 sm:mb-8 text-sm"
           >
             <ArrowLeft size={16} />
             Back to Blog
           </Link>
 
           {blog.imageId && (
-            <img
-              src={`/api/images/${blog.imageId}`}
-              alt={blog.title}
-              className="w-full rounded-lg mb-8 object-cover max-h-[500px]"
-            />
+            <div className="relative aspect-[16/9] rounded-lg overflow-hidden mb-6 sm:mb-8">
+              <Image
+                src={`/api/images/${blog.imageId}`}
+                alt={blog.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 768px"
+                className="object-cover"
+                priority
+              />
+            </div>
           )}
 
-          <div className="flex flex-wrap items-center gap-4 text-sm text-muted mb-6">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-muted mb-4 sm:mb-6">
             <span className="flex items-center gap-1">
               <User size={14} />
               {blog.author.name}
@@ -82,12 +91,12 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
 
           {blog.categories && (
-            <div className="flex flex-wrap items-center gap-2 mb-4">
-              <FolderOpen size={14} className="text-muted" />
+            <div className="flex flex-wrap items-center gap-2 mb-3">
+              <FolderOpen size={14} className="text-muted flex-shrink-0" />
               {blog.categories.split(",").map((cat: string) => (
                 <span
                   key={cat.trim()}
-                  className="bg-primary/10 text-primary text-xs px-3 py-1 rounded-full"
+                  className="bg-primary/10 text-primary text-xs px-2.5 py-0.5 rounded-full"
                 >
                   {cat.trim()}
                 </span>
@@ -96,12 +105,12 @@ export default async function BlogPostPage({ params }: Props) {
           )}
 
           {blog.tags && (
-            <div className="flex flex-wrap items-center gap-2 mb-8">
-              <Tag size={14} className="text-muted" />
+            <div className="flex flex-wrap items-center gap-2 mb-6 sm:mb-8">
+              <Tag size={14} className="text-muted flex-shrink-0" />
               {blog.tags.split(",").map((tag: string) => (
                 <span
                   key={tag.trim()}
-                  className="bg-accent/20 text-dark text-xs px-3 py-1 rounded-full"
+                  className="bg-accent/20 text-dark text-xs px-2.5 py-0.5 rounded-full"
                 >
                   {tag.trim()}
                 </span>
@@ -110,8 +119,8 @@ export default async function BlogPostPage({ params }: Props) {
           )}
 
           <div
-            className="blog-content prose max-w-none"
-            dangerouslySetInnerHTML={{ __html: blog.content }}
+            className="blog-content prose prose-sm sm:prose max-w-none"
+            dangerouslySetInnerHTML={{ __html: safeContent }}
           />
         </div>
       </section>

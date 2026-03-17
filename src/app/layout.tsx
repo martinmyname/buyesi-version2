@@ -1,19 +1,20 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Dosis, Overpass } from "next/font/google";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import PublicShell from "@/components/PublicShell";
 import "./globals.css";
 
 const dosis = Dosis({
   variable: "--font-heading",
   subsets: ["latin"],
   weight: ["200", "300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 const overpass = Overpass({
   variable: "--font-body",
   subsets: ["latin"],
   weight: ["300", "400", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -26,6 +27,12 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#2E8B57",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -34,9 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${dosis.variable} ${overpass.variable} antialiased`}>
-        <Navbar />
-        <main className="min-h-screen">{children}</main>
-        <Footer />
+        <PublicShell>{children}</PublicShell>
       </body>
     </html>
   );

@@ -1,28 +1,15 @@
 "use client";
 
-import { useState, useEffect, useRef, use } from "react";
+import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import Underline from "@tiptap/extension-underline";
 import Image from "@tiptap/extension-image";
 import Placeholder from "@tiptap/extension-placeholder";
-import {
-  Bold,
-  Italic,
-  UnderlineIcon,
-  Heading1,
-  Heading2,
-  Heading3,
-  List,
-  ListOrdered,
-  Quote,
-  Link as LinkIcon,
-  ImageIcon,
-  Undo,
-  Redo,
-} from "lucide-react";
+import BlogEditorField, { FeaturedImageUpload } from "@/components/BlogEditor";
+import { CheckCircle, ExternalLink } from "lucide-react";
 
 export default function EditBlogPage({
   params,
@@ -43,15 +30,18 @@ export default function EditBlogPage({
   const [loading, setLoading] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState("");
-  const editorImageInputRef = useRef<HTMLInputElement>(null);
+  const [success, setSuccess] = useState("");
 
   const editor = useEditor({
+    immediatelyRender: false,
     extensions: [
       StarterKit,
       Link.configure({ openOnClick: false }),
       Underline,
       Image,
-      Placeholder.configure({ placeholder: "Start writing your blog post..." }),
+      Placeholder.configure({
+        placeholder: "Start writing your blog post...",
+      }),
     ],
     editorProps: {
       attributes: {
@@ -91,53 +81,14 @@ export default function EditBlogPage({
     fetchBlog();
   }, [id, editor]);
 
-  async function handleFeaturedImageUpload(
-    e: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const res = await fetch("/api/images", { method: "POST", body: formData });
-    const data = await res.json();
-
-    if (res.ok) {
-      setFeaturedImage({ id: data.id, url: data.url });
+  async function handleSubmit(publish: boolean) {
+    if (!editor || !title.trim() || !excerpt.trim()) {
+      setError("Title and excerpt are required");
+      return;
     }
-  }
-
-  async function handleEditorImageUpload(
-    e: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const file = e.target.files?.[0];
-    if (!file || !editor) return;
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const res = await fetch("/api/images", { method: "POST", body: formData });
-    const data = await res.json();
-
-    if (res.ok) {
-      editor.chain().focus().setImage({ src: data.url }).run();
-    }
-  }
-
-  function addLink() {
-    if (!editor) return;
-    const url = prompt("Enter URL:");
-    if (url) {
-      editor.chain().focus().setLink({ href: url }).run();
-    }
-  }
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!editor) return;
 
     setError("");
+    setSuccess("");
     setLoading(true);
 
     try {
@@ -151,7 +102,7 @@ export default function EditBlogPage({
           imageId: featuredImage?.id || null,
           categories,
           tags,
-          published,
+          published: publish,
         }),
       });
 
@@ -161,7 +112,9 @@ export default function EditBlogPage({
         return;
       }
 
-      router.push("/admin/blog");
+      setPublished(publish);
+      setSuccess(publish ? "Post published!" : "Saved as draft!");
+      setTimeout(() => setSuccess(""), 3000);
     } catch {
       setError("Something went wrong");
     } finally {
@@ -179,9 +132,20 @@ export default function EditBlogPage({
 
   return (
     <div className="max-w-4xl">
-      <h1 className="font-heading text-3xl font-bold text-dark mb-8">
-        Edit Post
-      </h1>
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="font-heading text-3xl font-bold text-dark">
+          Edit Post
+        </h1>
+        <a
+          href={`/blog/${id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline font-body"
+        >
+          <ExternalLink size={14} />
+          View post
+        </a>
+      </div>
 
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 text-sm font-body">
@@ -189,7 +153,14 @@ export default function EditBlogPage({
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      {success && (
+        <div className="flex items-center gap-2 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 text-sm font-body">
+          <CheckCircle size={16} />
+          {success}
+        </div>
+      )}
+
+      <div className="space-y-6">
         <div>
           <label className="block text-sm font-semibold text-dark mb-1.5 font-body">
             Title
@@ -198,7 +169,6 @@ export default function EditBlogPage({
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            required
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-body"
             placeholder="Post title"
           />
@@ -211,140 +181,19 @@ export default function EditBlogPage({
           <textarea
             value={excerpt}
             onChange={(e) => setExcerpt(e.target.value)}
-            required
             rows={3}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-body resize-none"
             placeholder="Brief description of the post"
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-semibold text-dark mb-1.5 font-body">
-            Featured Image
-          </label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFeaturedImageUpload}
-            className="w-full text-sm text-muted font-body file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
-          />
-          {featuredImage && (
-            <img
-              src={featuredImage.url}
-              alt="Featured preview"
-              className="mt-3 max-h-48 rounded-lg object-cover"
-            />
-          )}
-        </div>
+        <FeaturedImageUpload
+          image={featuredImage}
+          onUpload={setFeaturedImage}
+          onRemove={() => setFeaturedImage(null)}
+        />
 
-        <div>
-          <label className="block text-sm font-semibold text-dark mb-1.5 font-body">
-            Content
-          </label>
-          <div className="border border-gray-300 rounded-lg overflow-hidden">
-            <div className="flex flex-wrap gap-1 p-2 border-b border-gray-200 bg-gray-50">
-              <ToolbarButton
-                onClick={() => editor?.chain().focus().toggleBold().run()}
-                active={editor?.isActive("bold")}
-              >
-                <Bold size={16} />
-              </ToolbarButton>
-              <ToolbarButton
-                onClick={() => editor?.chain().focus().toggleItalic().run()}
-                active={editor?.isActive("italic")}
-              >
-                <Italic size={16} />
-              </ToolbarButton>
-              <ToolbarButton
-                onClick={() => editor?.chain().focus().toggleUnderline().run()}
-                active={editor?.isActive("underline")}
-              >
-                <UnderlineIcon size={16} />
-              </ToolbarButton>
-              <div className="w-px bg-gray-300 mx-1" />
-              <ToolbarButton
-                onClick={() =>
-                  editor?.chain().focus().toggleHeading({ level: 1 }).run()
-                }
-                active={editor?.isActive("heading", { level: 1 })}
-              >
-                <Heading1 size={16} />
-              </ToolbarButton>
-              <ToolbarButton
-                onClick={() =>
-                  editor?.chain().focus().toggleHeading({ level: 2 }).run()
-                }
-                active={editor?.isActive("heading", { level: 2 })}
-              >
-                <Heading2 size={16} />
-              </ToolbarButton>
-              <ToolbarButton
-                onClick={() =>
-                  editor?.chain().focus().toggleHeading({ level: 3 }).run()
-                }
-                active={editor?.isActive("heading", { level: 3 })}
-              >
-                <Heading3 size={16} />
-              </ToolbarButton>
-              <div className="w-px bg-gray-300 mx-1" />
-              <ToolbarButton
-                onClick={() =>
-                  editor?.chain().focus().toggleBulletList().run()
-                }
-                active={editor?.isActive("bulletList")}
-              >
-                <List size={16} />
-              </ToolbarButton>
-              <ToolbarButton
-                onClick={() =>
-                  editor?.chain().focus().toggleOrderedList().run()
-                }
-                active={editor?.isActive("orderedList")}
-              >
-                <ListOrdered size={16} />
-              </ToolbarButton>
-              <ToolbarButton
-                onClick={() =>
-                  editor?.chain().focus().toggleBlockquote().run()
-                }
-                active={editor?.isActive("blockquote")}
-              >
-                <Quote size={16} />
-              </ToolbarButton>
-              <div className="w-px bg-gray-300 mx-1" />
-              <ToolbarButton
-                onClick={addLink}
-                active={editor?.isActive("link")}
-              >
-                <LinkIcon size={16} />
-              </ToolbarButton>
-              <ToolbarButton
-                onClick={() => editorImageInputRef.current?.click()}
-              >
-                <ImageIcon size={16} />
-              </ToolbarButton>
-              <div className="w-px bg-gray-300 mx-1" />
-              <ToolbarButton
-                onClick={() => editor?.chain().focus().undo().run()}
-              >
-                <Undo size={16} />
-              </ToolbarButton>
-              <ToolbarButton
-                onClick={() => editor?.chain().focus().redo().run()}
-              >
-                <Redo size={16} />
-              </ToolbarButton>
-            </div>
-            <EditorContent editor={editor} />
-          </div>
-          <input
-            ref={editorImageInputRef}
-            type="file"
-            accept="image/*"
-            onChange={handleEditorImageUpload}
-            className="hidden"
-          />
-        </div>
+        <BlogEditorField editor={editor} />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
@@ -373,63 +222,55 @@ export default function EditBlogPage({
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <input
-            id="published"
-            type="checkbox"
-            checked={published}
-            onChange={(e) => setPublished(e.target.checked)}
-            className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
-          />
-          <label
-            htmlFor="published"
-            className="text-sm font-semibold text-dark font-body"
-          >
-            Published
-          </label>
-        </div>
-
-        <div className="flex gap-3">
-          <button
-            type="submit"
-            disabled={loading}
-            className="bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-3 rounded-lg transition-colors font-body disabled:opacity-50"
-          >
-            {loading ? "Saving..." : "Save Changes"}
-          </button>
+        <div className="flex flex-wrap gap-3 pt-2">
+          {published ? (
+            <>
+              <button
+                type="button"
+                onClick={() => handleSubmit(true)}
+                disabled={loading}
+                className="bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-3 rounded-lg transition-colors font-body disabled:opacity-50"
+              >
+                {loading ? "Saving..." : "Update"}
+              </button>
+              <button
+                type="button"
+                onClick={() => handleSubmit(false)}
+                disabled={loading}
+                className="bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-6 py-3 rounded-lg transition-colors font-body disabled:opacity-50"
+              >
+                Unpublish
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={() => handleSubmit(true)}
+                disabled={loading}
+                className="bg-primary hover:bg-primary-dark text-white font-semibold px-6 py-3 rounded-lg transition-colors font-body disabled:opacity-50"
+              >
+                {loading ? "Saving..." : "Publish"}
+              </button>
+              <button
+                type="button"
+                onClick={() => handleSubmit(false)}
+                disabled={loading}
+                className="bg-gray-700 hover:bg-gray-800 text-white font-semibold px-6 py-3 rounded-lg transition-colors font-body disabled:opacity-50"
+              >
+                Save Draft
+              </button>
+            </>
+          )}
           <button
             type="button"
             onClick={() => router.push("/admin/blog")}
             className="bg-gray-200 hover:bg-gray-300 text-dark font-semibold px-6 py-3 rounded-lg transition-colors font-body"
           >
-            Cancel
+            Back
           </button>
         </div>
-      </form>
+      </div>
     </div>
-  );
-}
-
-function ToolbarButton({
-  onClick,
-  active,
-  children,
-}: {
-  onClick: () => void;
-  active?: boolean;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`p-2 rounded transition-colors ${
-        active
-          ? "bg-primary text-white"
-          : "text-muted hover:bg-gray-200 hover:text-dark"
-      }`}
-    >
-      {children}
-    </button>
   );
 }

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import Hero from "@/components/Hero";
 
 export const metadata: Metadata = {
@@ -32,19 +33,21 @@ export default function GalleryPage() {
         ]}
       />
 
-      <section className="py-16 bg-light">
+      <section className="py-8 sm:py-16 bg-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
             {images.map((image) => (
               <div
                 key={image.src}
-                className="rounded-lg overflow-hidden"
+                className="rounded-lg overflow-hidden relative aspect-square"
               >
-                <img
+                <Image
                   src={image.src}
                   alt={image.alt}
+                  fill
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  className="object-cover hover:scale-105 transition-transform duration-300"
                   loading="lazy"
-                  className="w-full h-64 object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
             ))}

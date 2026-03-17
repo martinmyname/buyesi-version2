@@ -113,7 +113,13 @@ export default function Footer() {
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-sm">
           <p>
             &copy; {new Date().getFullYear()} Buyesi Youth Initiative. All
-            rights reserved.
+            rights reserved.{" "}
+            <Link
+              href="/admin/login"
+              className="text-gray-500 hover:text-gray-400 transition-colors"
+            >
+              Admin
+            </Link>
           </p>
         </div>
       </div>
