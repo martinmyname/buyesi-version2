@@ -45,14 +45,14 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
           <Link
             href="/"
-            className="flex items-center gap-3 flex-shrink-0 -my-4"
+            className="flex items-center flex-shrink-0"
           >
             <Image
               src="/buyesi-logo.svg"
               alt="Buyesi Youth Initiative"
-              width={96}
-              height={96}
-              className="w-24 h-24"
+              width={56}
+              height={56}
+              className="w-12 h-12 sm:w-14 sm:h-14"
               priority
             />
           </Link>

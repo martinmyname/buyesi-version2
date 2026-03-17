@@ -17,13 +17,13 @@ export default function Hero({
 }: HeroProps) {
   return (
     <section
-      className="relative bg-cover bg-center py-24 md:py-32"
+      className="relative bg-cover bg-center py-14 sm:py-24 md:py-32"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <div className="absolute inset-0 bg-black/50" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
         {breadcrumbs && (
-          <div className="mb-4 text-sm">
+          <div className="mb-3 sm:mb-4 text-xs sm:text-sm">
             {breadcrumbs.map((crumb, i) => (
               <span key={i}>
                 {i > 0 && <span className="mx-2">/</span>}
@@ -38,11 +38,11 @@ export default function Hero({
             ))}
           </div>
         )}
-        <h1 className="font-heading text-3xl md:text-5xl font-bold mb-4">
+        <h1 className="font-heading text-2xl sm:text-3xl md:text-5xl font-bold mb-3 sm:mb-4 px-2">
           {title}
         </h1>
         {subtitle && (
-          <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8 text-gray-200">
+          <p className="text-sm sm:text-lg md:text-xl max-w-2xl mx-auto mb-6 sm:mb-8 text-gray-200">
             {subtitle}
           </p>
         )}

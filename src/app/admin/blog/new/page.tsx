@@ -85,8 +85,8 @@ export default function NewBlogPage() {
   }
 
   return (
-    <div className="max-w-4xl">
-      <h1 className="font-heading text-3xl font-bold text-dark mb-8">
+    <div className="max-w-4xl min-w-0">
+      <h1 className="font-heading text-2xl sm:text-3xl font-bold text-dark mb-6 sm:mb-8">
         Create New Post
       </h1>
 
@@ -103,7 +103,7 @@ export default function NewBlogPage() {
         </div>
       )}
 
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         <div>
           <label className="block text-sm font-semibold text-dark mb-1.5 font-body">
             Title

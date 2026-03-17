@@ -20,7 +20,7 @@ export default function AdminSidebar() {
 
   async function handleLogout() {
     await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/admin/login");
+    router.push("/");
     router.refresh();
   }
 
@@ -60,15 +60,14 @@ export default function AdminSidebar() {
             </Link>
           );
         })}
-        <a
+        <Link
           href="/"
-          target="_blank"
-          rel="noopener noreferrer"
+          onClick={() => setOpen(false)}
           className="flex items-center gap-3 px-4 py-2.5 rounded-lg font-body text-sm text-gray-300 hover:bg-white/10 hover:text-white transition-colors"
         >
           <Globe size={18} />
           View Site
-        </a>
+        </Link>
       </nav>
 
       <div className="p-4 border-t border-white/10">

@@ -21,20 +21,20 @@ export default function AboutPage() {
       />
 
       {/* Founder Section */}
-      <section className="py-16">
+      <section className="py-10 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
-            <h2 className="font-heading text-3xl font-bold mb-10 text-center">
+            <h2 className="font-heading text-2xl sm:text-3xl font-bold mb-6 sm:mb-10 text-center">
               Meet the Founder
             </h2>
-            <div className="flex flex-col md:flex-row items-center gap-10">
-              <div className="flex-shrink-0">
+            <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-10">
+              <div className="flex-shrink-0 w-full max-w-[200px] sm:max-w-[280px]">
                 <Image
                   src="/aboutusbg.jpeg"
                   alt="Doughlous Koche - Founder of Buyesi Youth Initiative"
                   width={280}
                   height={280}
-                  className="rounded-lg object-cover w-[280px] h-[280px] shadow-md"
+                  className="rounded-lg object-cover w-full aspect-square shadow-md"
                 />
               </div>
               <div className="text-center md:text-left">
@@ -84,10 +84,10 @@ export default function AboutPage() {
       <Counter />
 
       {/* Goat Economy & Demo Farm */}
-      <section className="py-16 bg-light">
+      <section className="py-10 sm:py-16 bg-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white rounded-lg p-8 shadow-sm">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8">
+            <div className="bg-white rounded-lg p-5 sm:p-8 shadow-sm">
               <Sprout size={40} className="text-primary mb-4" />
               <h3 className="font-heading text-2xl font-bold mb-3">
                 The Goat Economy
@@ -104,7 +104,7 @@ export default function AboutPage() {
                 Read More →
               </Link>
             </div>
-            <div className="bg-white rounded-lg p-8 shadow-sm">
+            <div className="bg-white rounded-lg p-5 sm:p-8 shadow-sm">
               <BookOpen size={40} className="text-primary mb-4" />
               <h3 className="font-heading text-2xl font-bold mb-3">
                 Demonstration Farm

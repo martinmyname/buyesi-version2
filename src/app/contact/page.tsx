@@ -23,11 +23,11 @@ export default function ContactPage() {
         ]}
       />
 
-      <section className="py-16 bg-light">
+      <section className="py-10 sm:py-16 bg-light">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {/* Contact Info */}
-            <div className="bg-white rounded-lg shadow-sm p-8">
+            <div className="bg-white rounded-lg shadow-sm p-5 sm:p-8">
               <h2 className="font-heading text-2xl font-bold mb-6">
                 Get in Touch
               </h2>
@@ -130,35 +130,35 @@ export default function ContactPage() {
             </div>
 
             {/* Bank Details */}
-            <div className="bg-white rounded-lg shadow-sm p-8">
+            <div className="bg-white rounded-lg shadow-sm p-5 sm:p-8">
               <div className="flex items-center gap-3 mb-6">
-                <Landmark size={24} className="text-primary" />
-                <h2 className="font-heading text-2xl font-bold">
+                <Landmark size={24} className="text-primary flex-shrink-0" />
+                <h2 className="font-heading text-xl sm:text-2xl font-bold">
                   Bank Details for Donations
                 </h2>
               </div>
               <div className="space-y-3 text-sm">
-                <div className="flex justify-between py-2 border-b border-gray-100">
+                <div className="flex flex-col sm:flex-row sm:justify-between py-2 border-b border-gray-100 gap-0.5">
                   <span className="text-muted">Bank Name</span>
                   <span className="font-medium">
                     Equity Bank Uganda Limited
                   </span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
+                <div className="flex flex-col sm:flex-row sm:justify-between py-2 border-b border-gray-100 gap-0.5">
                   <span className="text-muted">Account Name</span>
-                  <span className="font-medium text-right">
+                  <span className="font-medium">
                     Buyesi Youth Initiative (BYI) Limited
                   </span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
+                <div className="flex flex-col sm:flex-row sm:justify-between py-2 border-b border-gray-100 gap-0.5">
                   <span className="text-muted">Account Number</span>
                   <span className="font-medium">1001203394603</span>
                 </div>
-                <div className="flex justify-between py-2 border-b border-gray-100">
+                <div className="flex flex-col sm:flex-row sm:justify-between py-2 border-b border-gray-100 gap-0.5">
                   <span className="text-muted">Branch</span>
                   <span className="font-medium">Pallisa Branch</span>
                 </div>
-                <div className="flex justify-between py-2">
+                <div className="flex flex-col sm:flex-row sm:justify-between py-2 gap-0.5">
                   <span className="text-muted">Swift Code</span>
                   <span className="font-medium">EQBLUGKA</span>
                 </div>

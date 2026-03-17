@@ -29,8 +29,8 @@ export default function AdminLoginPage() {
         return;
       }
 
-      router.push("/admin");
       router.refresh();
+      router.push("/admin");
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -99,6 +99,13 @@ export default function AdminLoginPage() {
             {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
+
+        <a
+          href="/"
+          className="block text-center text-sm text-muted hover:text-primary transition-colors mt-6 font-body"
+        >
+          ← Back to website
+        </a>
       </div>
     </div>
   );

@@ -131,15 +131,13 @@ export default function EditBlogPage({
   }
 
   return (
-    <div className="max-w-4xl">
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="font-heading text-3xl font-bold text-dark">
+    <div className="max-w-4xl min-w-0">
+      <div className="flex items-center justify-between mb-6 sm:mb-8 gap-4">
+        <h1 className="font-heading text-2xl sm:text-3xl font-bold text-dark">
           Edit Post
         </h1>
         <a
           href={`/blog/${id}`}
-          target="_blank"
-          rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 text-sm text-primary hover:underline font-body"
         >
           <ExternalLink size={14} />
@@ -160,7 +158,7 @@ export default function EditBlogPage({
         </div>
       )}
 
-      <div className="space-y-6">
+      <div className="space-y-4 sm:space-y-6">
         <div>
           <label className="block text-sm font-semibold text-dark mb-1.5 font-body">
             Title

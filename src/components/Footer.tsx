@@ -14,8 +14,8 @@ const siteLinks = [
 export default function Footer() {
   return (
     <footer className="bg-dark text-gray-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
           {/* About */}
           <div>
             <h3 className="text-white font-heading text-lg font-bold mb-4">
@@ -25,7 +25,7 @@ export default function Footer() {
               Empowering rural communities through sustainable goat farming in
               Puti-Puti, Pallisa, Uganda. Let&apos;s grow with goats.
             </p>
-            <div className="flex gap-4">
+            <div className="flex flex-wrap gap-3 sm:gap-4">
               <a
                 href="https://x.com/DoughlousK9"
                 target="_blank"

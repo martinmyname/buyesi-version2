@@ -23,20 +23,21 @@ export default async function AdminDashboardPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="font-heading text-3xl font-bold text-dark">
+      <div className="flex items-center justify-between mb-6 sm:mb-8 gap-4">
+        <h1 className="font-heading text-2xl sm:text-3xl font-bold text-dark">
           Dashboard
         </h1>
         <Link
           href="/admin/blog/new"
-          className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-5 py-2.5 rounded-lg transition-colors font-body text-sm"
+          className="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-lg transition-colors font-body text-xs sm:text-sm flex-shrink-0"
         >
           <PenSquare size={16} />
-          New Post
+          <span className="hidden sm:inline">New Post</span>
+          <span className="sm:hidden">New</span>
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 mb-6 sm:mb-8">
         <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-100">
           <div className="flex items-center gap-3 mb-2">
             <FileText size={18} className="text-muted" />

@@ -42,10 +42,10 @@ export default function CausesPage() {
         ]}
       />
 
-      <section className="py-16 bg-light">
+      <section className="py-10 sm:py-16 bg-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl font-bold mb-3">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="font-heading text-2xl sm:text-3xl font-bold mb-3">
               What We Do
             </h2>
             <p className="text-muted max-w-2xl mx-auto">
@@ -55,14 +55,14 @@ export default function CausesPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8">
             {causes.map((cause) => (
               <div
                 key={cause.title}
                 className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow"
               >
                 <div
-                  className="h-56 bg-cover bg-center"
+                  className="h-40 sm:h-56 bg-cover bg-center"
                   style={{ backgroundImage: `url(${cause.image})` }}
                 />
                 <div className="p-6">
@@ -87,12 +87,12 @@ export default function CausesPage() {
 
       {/* CTA */}
       <section
-        className="relative bg-cover bg-center py-20"
+        className="relative bg-cover bg-center py-12 sm:py-20"
         style={{ backgroundImage: "url(/bg_2.jpg)" }}
       >
         <div className="absolute inset-0 bg-black/60" />
-        <div className="relative max-w-3xl mx-auto px-4 text-center text-white">
-          <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4">
+        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 text-center text-white">
+          <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
             Every Goat Changes a Life
           </h2>
           <p className="text-gray-200 mb-8">
