@@ -2,7 +2,7 @@ import Link from "next/link";
 import Counter from "@/components/Counter";
 import BlogCard from "@/components/BlogCard";
 import { prisma } from "@/lib/prisma";
-import { Heart, HandHeart, Award } from "lucide-react";
+import { Heart, HandHeart, Award, Landmark, Tractor } from "lucide-react";
 
 async function getRecentBlogs() {
   try {
@@ -153,6 +153,59 @@ export default async function Home() {
                 life through modern goat farming practices.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Programmes */}
+      <section className="py-10 sm:py-16 bg-light">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-10">
+            <h2 className="font-heading text-2xl sm:text-3xl font-bold">
+              Our Programmes
+            </h2>
+            <p className="text-muted mt-2">
+              Flagship initiatives driving sustainable change
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            {[
+              {
+                icon: Landmark,
+                title: "The Goat Economy",
+                desc: "A community-driven economic model that uses goat farming as a vehicle for poverty reduction, food security, and wealth creation across rural Eastern Uganda.",
+                link: "/goat-economy",
+              },
+              {
+                icon: Tractor,
+                title: "Demonstration Farm",
+                desc: "A hands-on training centre where farmers learn modern goat husbandry, breeding techniques, and sustainable land management practices.",
+                link: "/demonstration-farm",
+              },
+            ].map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={i}
+                  href={item.link}
+                  className="bg-white rounded-lg p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow flex gap-5 items-start group"
+                >
+                  <Icon
+                    size={40}
+                    className="text-primary shrink-0 mt-1"
+                  />
+                  <div>
+                    <h3 className="font-heading text-xl font-bold mb-2 group-hover:text-primary transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-sm text-muted">{item.desc}</p>
+                    <span className="text-primary font-medium text-sm mt-3 inline-block">
+                      Learn more →
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
