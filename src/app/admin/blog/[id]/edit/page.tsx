@@ -4,8 +4,6 @@ import { useState, useEffect, use } from "react";
 import { useRouter } from "next/navigation";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Link from "@tiptap/extension-link";
-import Underline from "@tiptap/extension-underline";
 import Image from "@tiptap/extension-image";
 import Placeholder from "@tiptap/extension-placeholder";
 import BlogEditorField, { FeaturedImageUpload } from "@/components/BlogEditor";
@@ -35,9 +33,9 @@ export default function EditBlogPage({
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
-      StarterKit,
-      Link.configure({ openOnClick: false }),
-      Underline,
+      StarterKit.configure({
+        link: { openOnClick: false },
+      }),
       Image,
       Placeholder.configure({
         placeholder: "Start writing your blog post...",
