@@ -1,10 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 export default function AdminLoginPage() {
-  const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -29,8 +27,8 @@ export default function AdminLoginPage() {
         return;
       }
 
-      router.refresh();
-      router.push("/admin");
+      // Full page navigation to ensure server-side session is picked up
+      window.location.href = "/admin";
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {

@@ -40,49 +40,51 @@ export default function Navbar() {
   }, [open, close]);
 
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <Link
-            href="/"
-            className="flex items-center flex-shrink-0 -my-4"
-          >
-            <Image
-              src="/buyesi-logo.svg"
-              alt="Buyesi Youth Initiative"
-              width={96}
-              height={96}
-              className="w-20 h-20 sm:w-24 sm:h-24"
-              priority
-            />
-          </Link>
+    <>
+      <nav className="bg-white shadow-sm sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <Link
+              href="/"
+              className="flex items-center flex-shrink-0 -my-4"
+            >
+              <Image
+                src="/buyesi-logo.svg"
+                alt="Buyesi Youth Initiative"
+                width={96}
+                height={96}
+                className="w-20 h-20 sm:w-24 sm:h-24"
+                priority
+              />
+            </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-5 lg:gap-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
+            {/* Desktop nav */}
+            <div className="hidden md:flex items-center gap-5 lg:gap-6">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-sm font-medium text-gray-700 hover:text-primary transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+
+            {/* Mobile toggle */}
+            <button
+              onClick={() => setOpen(!open)}
+              className="md:hidden p-2 text-gray-700"
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+            >
+              {open ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
-
-          {/* Mobile toggle */}
-          <button
-            onClick={() => setOpen(!open)}
-            className="md:hidden p-2 text-gray-700"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-          >
-            {open ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile nav overlay */}
+      {/* Mobile nav overlay — portaled outside sticky nav */}
       {open && (
         <div
           className="md:hidden fixed inset-0 top-16 bg-black/40 z-40"
@@ -91,7 +93,7 @@ export default function Navbar() {
         />
       )}
 
-      {/* Mobile nav */}
+      {/* Mobile nav — portaled outside sticky nav */}
       {open && (
         <div className="md:hidden fixed inset-x-0 top-16 bg-white border-t z-50 shadow-lg max-h-[calc(100vh-4rem)] overflow-y-auto">
           <div className="px-4 py-3 space-y-1">
@@ -108,6 +110,6 @@ export default function Navbar() {
           </div>
         </div>
       )}
-    </nav>
+    </>
   );
 }
