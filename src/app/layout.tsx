@@ -20,7 +20,7 @@ const overpass = Overpass({
 export const metadata: Metadata = {
   title: "Buyesi Youth Initiative - Sustainable Goat Farming in Uganda",
   description:
-    "Empowering rural communities through sustainable goat farming in Puti-Puti, Pallisa, Uganda. Let's grow with goats.",
+    "Empowering rural communities through sustainable goat farming in the Eastern Region of Uganda. Let's grow with goats.",
   icons: {
     icon: "/favicon/favicon-32x32.png",
     apple: "/favicon/apple-touch-icon.png",

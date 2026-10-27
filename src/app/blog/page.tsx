@@ -10,6 +10,9 @@ export const metadata: Metadata = {
     "Read the latest news, stories, and updates from Buyesi Youth Initiative.",
 };
 
+// Refresh regularly so new posts from the admin appear without a redeploy
+export const revalidate = 60;
+
 async function getBlogs() {
   try {
     return await prisma.blog.findMany({

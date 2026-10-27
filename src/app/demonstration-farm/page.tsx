@@ -1,18 +1,12 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import Hero from "@/components/Hero";
-import {
-  BookOpen,
-  FlaskConical,
-  Home,
-  Dna,
-  Sprout,
-} from "lucide-react";
+import { BookOpen, Dna, FlaskConical, House, Sprout } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Demonstration Farm - Buyesi Youth Initiative",
   description:
-    "Visit our demonstration farm — a learning center for modern goat farming techniques in Puti-Puti, Uganda.",
+    "Visit our demonstration farm — a learning center for modern goat farming techniques in the Eastern Region of Uganda.",
 };
 
 export default function DemonstrationFarmPage() {
@@ -22,7 +16,7 @@ export default function DemonstrationFarmPage() {
         title="Demonstration Farm"
         breadcrumbs={[
           { label: "Home", href: "/" },
-          { label: "About", href: "/about" },
+          { label: "Programmes", href: "/causes" },
           { label: "Demonstration Farm" },
         ]}
       />
@@ -39,8 +33,6 @@ export default function DemonstrationFarmPage() {
               farming techniques before applying them on their own farms.
             </p>
           </div>
-
-          {/* Two sections */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
             <div>
               <div className="flex items-center gap-3 mb-4">
@@ -61,12 +53,11 @@ export default function DemonstrationFarmPage() {
                 guidance.
               </p>
             </div>
-
             <div>
               <div className="flex items-center gap-3 mb-4">
                 <FlaskConical size={28} className="text-primary" />
                 <h3 className="font-heading text-2xl font-bold">
-                  Research & Innovation
+                  Research &amp; Innovation
                 </h3>
               </div>
               <p className="text-muted leading-relaxed mb-4">
@@ -82,62 +73,58 @@ export default function DemonstrationFarmPage() {
               </p>
             </div>
           </div>
-
-          {/* What You'll Find */}
           <div className="mb-16">
             <h3 className="font-heading text-2xl font-bold text-center mb-10">
               What You&apos;ll Find at Our Farm
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[
-                {
-                  icon: Home,
-                  title: "Sustainable Facilities",
-                  desc: "Model goat houses and infrastructure built with locally available materials, designed for the climate and easy for farmers to replicate at home.",
-                },
-                {
-                  icon: Dna,
-                  title: "Breeding Stock",
-                  desc: "High-quality breeding goats that produce offspring with improved genetics for better milk yield, meat production, and disease resistance.",
-                },
-                {
-                  icon: Sprout,
-                  title: "Feed Production",
-                  desc: "Demonstration plots for growing fodder crops and producing nutritious feed mixes that maximize goat health and productivity using local resources.",
-                },
-              ].map((item) => {
-                const Icon = item.icon;
-                return (
-                  <div
-                    key={item.title}
-                    className="bg-light rounded-lg p-8 text-center"
-                  >
-                    <Icon size={40} className="mx-auto mb-4 text-primary" />
-                    <h4 className="font-heading text-lg font-bold mb-3">
-                      {item.title}
-                    </h4>
-                    <p className="text-sm text-muted leading-relaxed">
-                      {item.desc}
-                    </p>
-                  </div>
-                );
-              })}
+              <div className="bg-light rounded-lg p-8 text-center">
+                <House size={40} className="mx-auto mb-4 text-primary" />
+                <h4 className="font-heading text-lg font-bold mb-3">
+                  Sustainable Facilities
+                </h4>
+                <p className="text-sm text-muted leading-relaxed">
+                  Model goat houses and infrastructure built with locally
+                  available materials, designed for the climate and easy for
+                  farmers to replicate at home.
+                </p>
+              </div>
+              <div className="bg-light rounded-lg p-8 text-center">
+                <Dna size={40} className="mx-auto mb-4 text-primary" />
+                <h4 className="font-heading text-lg font-bold mb-3">
+                  Breeding Stock
+                </h4>
+                <p className="text-sm text-muted leading-relaxed">
+                  High-quality breeding goats that produce offspring with
+                  improved genetics for better milk yield, meat production, and
+                  disease resistance.
+                </p>
+              </div>
+              <div className="bg-light rounded-lg p-8 text-center">
+                <Sprout size={40} className="mx-auto mb-4 text-primary" />
+                <h4 className="font-heading text-lg font-bold mb-3">
+                  Feed Production
+                </h4>
+                <p className="text-sm text-muted leading-relaxed">
+                  Demonstration plots for growing fodder crops and producing
+                  nutritious feed mixes that maximize goat health and
+                  productivity using local resources.
+                </p>
+              </div>
             </div>
           </div>
-
-          {/* CTA */}
           <div className="bg-primary rounded-lg p-10 text-center text-white">
             <h3 className="font-heading text-2xl md:text-3xl font-bold mb-4">
               Visit Our Demonstration Farm
             </h3>
             <p className="text-green-100 mb-6 max-w-2xl mx-auto">
               Come see our work in action. Whether you are a farmer looking to
-              learn, a partner exploring collaboration, or a supporter wanting to
-              witness the impact firsthand — you are welcome.
+              learn, a partner exploring collaboration, or a supporter wanting
+              to witness the impact firsthand — you are welcome.
             </p>
             <Link
-              href="/contact"
               className="bg-accent hover:bg-accent-dark text-dark px-8 py-3 rounded-lg font-bold transition-colors"
+              href="/contact"
             >
               Plan Your Visit
             </Link>

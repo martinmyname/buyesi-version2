@@ -7,14 +7,16 @@ import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/causes", label: "Causes" },
+  { href: "/causes", label: "Programmes" },
   { href: "/team", label: "Team" },
   { href: "/blog", label: "Blog" },
   { href: "/gallery", label: "Gallery" },
   { href: "/events", label: "Events" },
   { href: "/contact", label: "Contact" },
 ];
+
+const ctaHref = "/support";
+const ctaLabel = "Become a Goat Guardian";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -41,19 +43,17 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="bg-white shadow-sm sticky top-0 z-50">
+      <nav className="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <Link
-              href="/"
-              className="flex items-center flex-shrink-0 -my-4"
-            >
+          <div className="flex items-center justify-between h-14 sm:h-16">
+            <Link href="/" className="flex items-center flex-shrink-0">
               <Image
-                src="/buyesi-logo.svg"
+                src="/buyesi-logo.png"
                 alt="Buyesi Youth Initiative"
-                width={96}
-                height={96}
-                className="w-20 h-20 sm:w-24 sm:h-24"
+                width={512}
+                height={288}
+                sizes="(max-width: 640px) 100px, 120px"
+                className="h-10 sm:h-12 w-auto"
                 priority
               />
             </Link>
@@ -69,6 +69,12 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
+              <Link
+                href={ctaHref}
+                className="text-sm font-semibold bg-accent hover:bg-accent-dark text-dark px-3.5 lg:px-4 py-2 rounded-lg transition-colors whitespace-nowrap"
+              >
+                {ctaLabel}
+              </Link>
             </div>
 
             {/* Mobile toggle */}
@@ -84,18 +90,18 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile nav overlay — portaled outside sticky nav */}
+      {/* Mobile nav overlay — portaled outside fixed nav */}
       {open && (
         <div
-          className="md:hidden fixed inset-0 top-16 bg-black/40 z-40"
+          className="md:hidden fixed inset-0 top-14 sm:top-16 bg-black/40 z-40"
           onClick={close}
           aria-hidden="true"
         />
       )}
 
-      {/* Mobile nav — portaled outside sticky nav */}
+      {/* Mobile nav — portaled outside fixed nav */}
       {open && (
-        <div className="md:hidden fixed inset-x-0 top-16 bg-white border-t z-50 shadow-lg max-h-[calc(100vh-4rem)] overflow-y-auto">
+        <div className="md:hidden fixed inset-x-0 top-14 sm:top-16 bg-white border-t z-50 shadow-lg max-h-[calc(100vh-3.5rem)] sm:max-h-[calc(100vh-4rem)] overflow-y-auto">
           <div className="px-4 py-3 space-y-1">
             {navLinks.map((link) => (
               <Link
@@ -107,6 +113,13 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            <Link
+              href={ctaHref}
+              onClick={close}
+              className="block mt-2 text-center text-sm font-semibold bg-accent hover:bg-accent-dark text-dark px-4 py-2.5 rounded-lg transition-colors"
+            >
+              {ctaLabel}
+            </Link>
           </div>
         </div>
       )}

@@ -2,18 +2,20 @@ import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
 
 const siteLinks = [
-  { href: "/about", label: "About Us" },
-  { href: "/causes", label: "Our Causes" },
+  { href: "/causes", label: "Our Programmes" },
   { href: "/team", label: "Our Team" },
   { href: "/blog", label: "Blog" },
   { href: "/gallery", label: "Gallery" },
   { href: "/events", label: "Events" },
   { href: "/contact", label: "Contact" },
+  { href: "/support", label: "Become a Goat Guardian" },
 ];
 
 const programmeLinks = [
   { href: "/goat-economy", label: "The Goat Economy" },
-  { href: "/demonstration-farm", label: "Demonstration Farm" },
+  { href: "/rural-breeding", label: "Buyesi Rural Breeding Model" },
+  { href: "/child-future", label: "Every Goat, Every Child's Future" },
+  { href: "/support", label: "Become a Goat Guardian" },
 ];
 
 export default function Footer() {
@@ -28,7 +30,7 @@ export default function Footer() {
             </h3>
             <p className="text-sm leading-relaxed mb-4">
               Empowering rural communities through sustainable goat farming in
-              Puti-Puti, Pallisa, Uganda. Let&apos;s grow with goats.
+              the Eastern Region of Uganda. Let&apos;s grow with goats.
             </p>
             <div className="flex flex-wrap gap-3 sm:gap-4">
               <a

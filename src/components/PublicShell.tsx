@@ -19,7 +19,7 @@ export default function PublicShell({
   return (
     <>
       <Navbar />
-      <main className="min-h-screen">{children}</main>
+      <main className="min-h-screen pt-14 sm:pt-16">{children}</main>
       <Footer />
     </>
   );
